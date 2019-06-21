@@ -1,10 +1,19 @@
 // Listen for submit
-document
-  .getElementById("loan-form")
-  .addEventListener("click", calculateResults);
+document.getElementById("loan-form").addEventListener("submit", function(e) {
+  // Hide results
+  document.getElementById("results").style.display = "none";
+  // Show loader
+  document.getElementById("loading").style.display = "block";
+
+  // Hiding after 2 seconds
+  setTimeout(calculateResults, 2000);
+
+  // Due to it being a form, we prevent the default behaviour
+  e.preventDefault();
+});
 
 // Calculate Results
-function calculateResults(e) {
+function calculateResults() {
   console.log("Calculating...");
 
   // UI Variables
@@ -31,16 +40,21 @@ function calculateResults(e) {
     UItotalInterest.value = (monthly * calculatedPayments - principal).toFixed(
       2
     );
+    // Show results
+    document.getElementById("results").style.display = "block";
+    // Hide loader
+    document.getElementById("loading").style.display = "none";
   } else {
     showError("Please check your numbers");
   }
-
-  // Due to it being a form, we prevent the default behaviour
-  e.preventDefault();
 }
 
 // Show error
 function showError(error) {
+  // Hide results
+  document.getElementById("results").style.display = "none";
+  // Hide loader
+  document.getElementById("loading").style.display = "none";
   // Create div element
   const errorDiv = document.createElement("div");
 
